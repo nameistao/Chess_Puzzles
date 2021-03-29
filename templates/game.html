@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <title>Chess Tutor</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         //get the board/problem layout
@@ -30,50 +32,54 @@
         var wR = "{{url_for('static', filename='images/wR.png')}}";
         var empty = "{{url_for('static', filename='images/--.png')}}";
 
+        //put all the images in their positions indicated by board (8x8 2d array)
         $( document ).ready(function() {
+
 
             for(i=0;i<8;i++){
                 for(j=0;j<8;j++){
-                    var rowName = "#row" + (i+1).toString();
+                    var rowName = ".row" + (i+1).toString();
+                    var colName = ".col" + (j+1).toString();
+                    var squareName = rowName + " " + colName;
                     var piece = board[i][j];
                     if(piece == "bB"){
-                        $(rowName).append("<img src=" + bB + ">");
+                        $(squareName).append("<img src=" + bB + ">");
                     }
                     else if(piece == "bK"){
-                        $(rowName).append("<img src=" + bK + ">");
+                        $(squareName).append("<img src=" + bK + ">");
                     }
                     else if(piece == "bN"){
-                        $(rowName).append("<img src=" + bN + ">");
+                        $(squareName).append("<img src=" + bN + ">");
                     }
                     else if(piece == "bp"){
-                        $(rowName).append("<img src=" + bp + ">");
+                        $(squareName).append("<img src=" + bp + ">");
                     }
                     else if(piece == "bQ"){
-                        $(rowName).append("<img src=" + bQ + ">");
+                        $(squareName).append("<img src=" + bQ + ">");
                     }
                     else if(piece == "bR"){
-                        $(rowName).append("<img src=" + bR + ">");
+                        $(squareName).append("<img src=" + bR + ">");
                     }
                     else if(piece == "wB"){
-                        $(rowName).append("<img src=" + wB + ">");
+                        $(squareName).append("<img src=" + wB + ">");
                     }
                     else if(piece == "wK"){
-                        $(rowName).append("<img src=" + wK + ">");
+                        $(squareName).append("<img src=" + wK + ">");
                     }
                     else if(piece == "wN"){
-                        $(rowName).append("<img src=" + wN + ">");
+                        $(squareName).append("<img src=" + wN + ">");
                     }
                     else if(piece == "wp"){
-                        $(rowName).append("<img src=" + wp + ">");
+                        $(squareName).append("<img src=" + wp + ">");
                     }
                     else if(piece == "wQ"){
-                        $(rowName).append("<img src=" + wQ + ">");
+                        $(squareName).append("<img src=" + wQ + ">");
                     }
                     else if(piece == "wR"){
-                        $(rowName).append("<img src=" + wR + ">");
+                        $(squareName).append("<img src=" + wR + ">");
                     }
                     else{
-                        $(rowName).append("<img src=" + empty + ">");
+                        $(squareName).append("<img src=" + empty + ">");
                     }
                 }
             }
@@ -90,14 +96,89 @@
 
 {% else %}
     <h1>Welcome to Chess Tutor.</h1>
+
     <div id="board">
-        <div id="row1"></div>
-        <div id="row2"></div>
-        <div id="row3"></div>
-        <div id="row4"></div>
-        <div id="row5"></div>
-        <div id="row6"></div>
-        <div id="row7"></div>
-        <div id="row8"></div>
+        <table style="width:auto; height:auto;">
+            <tr class="row1">
+              <th class="col1" style="background-color:#eaecd0;"></th>
+              <th class="col2" style="background-color:#779555;"></th>
+              <th class="col3" style="background-color:#eaecd0;"></th>
+              <th class="col4" style="background-color:#779555;"></th>
+              <th class="col5" style="background-color:#eaecd0;"></th>
+              <th class="col6" style="background-color:#779555;"></th>
+              <th class="col7" style="background-color:#eaecd0;"></th>
+              <th class="col8" style="background-color:#779555;"></th>
+            </tr>
+            <tr class="row2">
+              <th class="col1" style="background-color:#779555;"></th>
+              <th class="col2" style="background-color:#eaecd0;"></th>
+              <th class="col3" style="background-color:#779555;"></th>
+              <th class="col4" style="background-color:#eaecd0;"></th>
+              <th class="col5" style="background-color:#779555;"></th>
+              <th class="col6" style="background-color:#eaecd0;"></th>
+              <th class="col7" style="background-color:#779555;"></th>
+              <th class="col8" style="background-color:#eaecd0;"></th>
+            </tr>
+            <tr class="row3">
+              <th class="col1" style="background-color:#eaecd0;"></th>
+              <th class="col2" style="background-color:#779555;"></th>
+              <th class="col3" style="background-color:#eaecd0;"></th>
+              <th class="col4" style="background-color:#779555;"></th>
+              <th class="col5" style="background-color:#eaecd0;"></th>
+              <th class="col6" style="background-color:#779555;"></th>
+              <th class="col7" style="background-color:#eaecd0;"></th>
+              <th class="col8" style="background-color:#779555;"></th>
+             </tr>
+            <tr class="row4">
+              <th class="col1" style="background-color:#779555;"></th>
+              <th class="col2" style="background-color:#eaecd0;"></th>
+              <th class="col3" style="background-color:#779555;"></th>
+              <th class="col4" style="background-color:#eaecd0;"></th>
+              <th class="col5" style="background-color:#779555;"></th>
+              <th class="col6" style="background-color:#eaecd0;"></th>
+              <th class="col7" style="background-color:#779555;"></th>
+              <th class="col8" style="background-color:#eaecd0;"></th>
+             </tr>
+            <tr class="row5">
+              <th class="col1" style="background-color:#eaecd0;"></th>
+              <th class="col2" style="background-color:#779555;"></th>
+              <th class="col3" style="background-color:#eaecd0;"></th>
+              <th class="col4" style="background-color:#779555;"></th>
+              <th class="col5" style="background-color:#eaecd0;"></th>
+              <th class="col6" style="background-color:#779555;"></th>
+              <th class="col7" style="background-color:#eaecd0;"></th>
+              <th class="col8" style="background-color:#779555;"></th>
+             </tr>
+            <tr class="row6">
+              <th class="col1" style="background-color:#779555;"></th>
+              <th class="col2" style="background-color:#eaecd0;"></th>
+              <th class="col3" style="background-color:#779555;"></th>
+              <th class="col4" style="background-color:#eaecd0;"></th>
+              <th class="col5" style="background-color:#779555;"></th>
+              <th class="col6" style="background-color:#eaecd0;"></th>
+              <th class="col7" style="background-color:#779555;"></th>
+              <th class="col8" style="background-color:#eaecd0;"></th>
+             </tr>
+            <tr class="row7">
+              <th class="col1" style="background-color:#eaecd0;"></th>
+              <th class="col2" style="background-color:#779555;"></th>
+              <th class="col3" style="background-color:#eaecd0;"></th>
+              <th class="col4" style="background-color:#779555;"></th>
+              <th class="col5" style="background-color:#eaecd0;"></th>
+              <th class="col6" style="background-color:#779555;"></th>
+              <th class="col7" style="background-color:#eaecd0;"></th>
+              <th class="col8" style="background-color:#779555;"></th>
+             </tr>
+            <tr class="row8">
+              <th class="col1" style="background-color:#779555;"></th>
+              <th class="col2" style="background-color:#eaecd0;"></th>
+              <th class="col3" style="background-color:#779555;"></th>
+              <th class="col4" style="background-color:#eaecd0;"></th>
+              <th class="col5" style="background-color:#779555;"></th>
+              <th class="col6" style="background-color:#eaecd0;"></th>
+              <th class="col7" style="background-color:#779555;"></th>
+              <th class="col8" style="background-color:#eaecd0;"></th>
+             </tr>
+        </table>
     </div>
 {% endif %}
