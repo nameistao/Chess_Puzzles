@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        var board = "{{board}}".split("|");
+        var row1 = board[0].split(" ");
+        var row2 = board[1].split(" ");
+        var row3 = board[2].split(" ");
+        var row4 = board[3].split(" ");
+        var row5 = board[4].split(" ");
+        var row6 = board[5].split(" ");
+        var row7 = board[6].split(" ");
+        var row8 = board[7].split(" ");
+    </script>
+</head>
+<body></body>
+
+
+</html>
+{% if game %}
+    <h1>Hello {{ game }}</h1>
+
+{% else %}
+    <h1>Welcome to Chess Tutor.</h1>
+    <div id="board">
+        <img src="{{url_for('static', filename='images/bB.png')}}">
+    </div>
+{% endif %}
