@@ -3,6 +3,7 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+        //get the board/problem layout
         var board = "{{board}}".split("|");
         var row1 = board[0].split(" ");
         var row2 = board[1].split(" ");
@@ -12,6 +13,72 @@
         var row6 = board[5].split(" ");
         var row7 = board[6].split(" ");
         var row8 = board[7].split(" ");
+        var board = [row1, row2, row3, row4, row5, row6, row7, row8];
+
+        //get the image urls
+        var bB = "{{url_for('static', filename='images/bB.png')}}";
+        var bK = "{{url_for('static', filename='images/bK.png')}}";
+        var bN = "{{url_for('static', filename='images/bN.png')}}";
+        var bp = "{{url_for('static', filename='images/bp.png')}}";
+        var bQ = "{{url_for('static', filename='images/bQ.png')}}";
+        var bR = "{{url_for('static', filename='images/bR.png')}}";
+        var wB = "{{url_for('static', filename='images/wB.png')}}";
+        var wK = "{{url_for('static', filename='images/wK.png')}}";
+        var wN = "{{url_for('static', filename='images/wN.png')}}";
+        var wp = "{{url_for('static', filename='images/wp.png')}}";
+        var wQ = "{{url_for('static', filename='images/wQ.png')}}";
+        var wR = "{{url_for('static', filename='images/wR.png')}}";
+        var empty = "{{url_for('static', filename='images/--.png')}}";
+
+        $( document ).ready(function() {
+
+            for(i=0;i<8;i++){
+                for(j=0;j<8;j++){
+                    var rowName = "#row" + (i+1).toString();
+                    var piece = board[i][j];
+                    if(piece == "bB"){
+                        $(rowName).append("<img src=" + bB + ">");
+                    }
+                    else if(piece == "bK"){
+                        $(rowName).append("<img src=" + bK + ">");
+                    }
+                    else if(piece == "bN"){
+                        $(rowName).append("<img src=" + bN + ">");
+                    }
+                    else if(piece == "bp"){
+                        $(rowName).append("<img src=" + bp + ">");
+                    }
+                    else if(piece == "bQ"){
+                        $(rowName).append("<img src=" + bQ + ">");
+                    }
+                    else if(piece == "bR"){
+                        $(rowName).append("<img src=" + bR + ">");
+                    }
+                    else if(piece == "wB"){
+                        $(rowName).append("<img src=" + wB + ">");
+                    }
+                    else if(piece == "wK"){
+                        $(rowName).append("<img src=" + wK + ">");
+                    }
+                    else if(piece == "wN"){
+                        $(rowName).append("<img src=" + wN + ">");
+                    }
+                    else if(piece == "wp"){
+                        $(rowName).append("<img src=" + wp + ">");
+                    }
+                    else if(piece == "wQ"){
+                        $(rowName).append("<img src=" + wQ + ">");
+                    }
+                    else if(piece == "wR"){
+                        $(rowName).append("<img src=" + wR + ">");
+                    }
+                    else{
+                        $(rowName).append("<img src=" + empty + ">");
+                    }
+                }
+            }
+        });
+
     </script>
 </head>
 <body></body>
@@ -24,6 +91,13 @@
 {% else %}
     <h1>Welcome to Chess Tutor.</h1>
     <div id="board">
-        <img src="{{url_for('static', filename='images/bB.png')}}">
+        <div id="row1"></div>
+        <div id="row2"></div>
+        <div id="row3"></div>
+        <div id="row4"></div>
+        <div id="row5"></div>
+        <div id="row6"></div>
+        <div id="row7"></div>
+        <div id="row8"></div>
     </div>
 {% endif %}
