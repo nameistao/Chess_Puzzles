@@ -6,18 +6,49 @@ app = Flask(__name__)
 
 def generateBoard():
     boards = []
+    selects = []
+    gos = []
 
-    board0 = [["bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"],
-              ["bp", "bp", "bp", "bp", "bp", "bp", "bp", "bp"],
-              ["--", "--", "--", "--", "--", "--", "--", "--"],
-              ["--", "--", "--", "--", "--", "--", "--", "--"],
-              ["--", "--", "--", "--", "--", "--", "--", "--"],
-              ["--", "--", "--", "--", "--", "--", "--", "--"],
-              ["wp", "wp", "wp", "wp", "wp", "wp", "wp", "wp"],
-              ["wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"]]
+    board0 = [["--", "wQ", "--", "--", "--", "--", "bR", "--"],
+              ["--", "bp", "--", "bK", "--", "bQ", "bp", "--"],
+              ["bp", "--", "bB", "wB", "--", "--", "--", "bp"],
+              ["wp", "--", "--", "bp", "wp", "bp", "--", "--"],
+              ["--", "wp", "--", "--", "--", "--", "--", "--"],
+              ["--", "--", "--", "--", "--", "--", "wR", "wp"],
+              ["--", "--", "--", "--", "--", "--", "wp", "--"],
+              ["--", "--", "--", "--", "--", "--", "wK", "--"]]
     boards.append(board0);
+    selects.append(2)
+    gos.append(11)
 
-    selectBoard = boards[random.randint(0,len(boards)-1)]
+    board1 = [["--", "bR", "--", "--", "bR", "--", "bK", "--"],
+              ["--", "--", "bQ", "--", "bB", "--", "bp", "--"],
+              ["bp", "--", "--", "--", "--", "--", "bp", "--"],
+              ["--", "--", "--", "--", "bp", "bB", "--", "wp"],
+              ["--", "bN", "--", "--", "--", "--", "--", "--"],
+              ["--", "wN", "wN", "--", "--", "--", "--", "wB"],
+              ["--", "wp", "wp", "--", "wQ", "--", "--", "--"],
+              ["--", "wK", "--", "wR", "--", "--", "--", "wR"]]
+    boards.append(board1);
+    selects.append(32)
+    gos.append(23)
+
+    board2 = [["--", "--", "--", "--", "--", "bR", "--", "--"],
+              ["--", "bp", "bQ", "--", "bK", "--", "bB", "--"],
+              ["--", "--", "--", "wR", "bp", "--", "--", "bp"],
+              ["--", "wB", "bp", "--", "--", "--", "bp", "--"],
+              ["wp", "--", "bN", "--", "wp", "--", "--", "--"],
+              ["--", "--", "wp", "--", "--", "--", "--", "--"],
+              ["--", "wp", "--", "--", "wQ", "--", "wp", "wp"],
+              ["--", "--", "--", "--", "--", "--", "wK", "--"]]
+    boards.append(board2);
+    selects.append(20)
+    gos.append(12)
+
+    randNum = random.randint(0, len(boards)-1)
+    selectBoard = boards[randNum]
+    selectSelect = selects[randNum]
+    selectGo = gos[randNum]
 
     boardString =  ""
     for i in range(len(selectBoard)):
@@ -25,7 +56,7 @@ def generateBoard():
             boardString += selectBoard[i][j] + " "
         boardString += "|"
 
-    return boardString
+    return (boardString, selectSelect, selectGo)
 
 @app.route("/", methods=['GET','POST'])
 def index():
@@ -33,7 +64,11 @@ def index():
 
 @app.route('/game',methods = ['POST', 'GET'])
 def game():
-    return render_template("game.html", board=generateBoard())
+    tuple = generateBoard()
+    board = tuple[0]
+    select = tuple[1]
+    go = tuple[2]
+    return render_template("game.html", board=board, select=select, go=go)
 
 if __name__ == "__main__":
     app.run(debug=True)

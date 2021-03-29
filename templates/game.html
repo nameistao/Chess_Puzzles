@@ -3,8 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Chess Tutor</title>
+    <style>
+        .selected {
+            background-color: #FFFF66 !important;
+        }
+        #board{
+            width:100%;
+            height:auto;
+            max-width: 600px;
+        }
+        th{
+            width:12.5%;
+            height:auto;
+        }
+        tr{
+            width:12.5%;
+            height:auto;
+        }
+        #contentLeft{
+            float:left;
+            height:100%;
+        }
+        #contentRight{
+            float:right;
+            height:100%;
+        }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+        //alert("{{select}}");
+        //alert("{{go}}");
         //get the board/problem layout
         var board = "{{board}}".split("|");
         var row1 = board[0].split(" ");
@@ -35,6 +63,14 @@
         //put all the images in their positions indicated by board (8x8 2d array)
         $( document ).ready(function() {
 
+            $("th").click(function(){
+                if($(this).hasClass('selected')){
+                    $(this).removeClass('selected');
+                }
+                else{
+                    $(this).addClass('selected');
+                }
+            });
 
             for(i=0;i<8;i++){
                 for(j=0;j<8;j++){
@@ -43,43 +79,43 @@
                     var squareName = rowName + " " + colName;
                     var piece = board[i][j];
                     if(piece == "bB"){
-                        $(squareName).append("<img src=" + bB + ">");
+                        $(squareName).append("<img src=" + bB + " width=100% height=auto>");
                     }
                     else if(piece == "bK"){
-                        $(squareName).append("<img src=" + bK + ">");
+                        $(squareName).append("<img src=" + bK + " width=100% height=auto>");
                     }
                     else if(piece == "bN"){
-                        $(squareName).append("<img src=" + bN + ">");
+                        $(squareName).append("<img src=" + bN + " width=100% height=auto>");
                     }
                     else if(piece == "bp"){
-                        $(squareName).append("<img src=" + bp + ">");
+                        $(squareName).append("<img src=" + bp + " width=100% height=auto>");
                     }
                     else if(piece == "bQ"){
-                        $(squareName).append("<img src=" + bQ + ">");
+                        $(squareName).append("<img src=" + bQ + " width=100% height=auto>");
                     }
                     else if(piece == "bR"){
-                        $(squareName).append("<img src=" + bR + ">");
+                        $(squareName).append("<img src=" + bR + " width=100% height=auto>");
                     }
                     else if(piece == "wB"){
-                        $(squareName).append("<img src=" + wB + ">");
+                        $(squareName).append("<img src=" + wB + " width=100% height=auto>");
                     }
                     else if(piece == "wK"){
-                        $(squareName).append("<img src=" + wK + ">");
+                        $(squareName).append("<img src=" + wK + " width=100% height=auto>");
                     }
                     else if(piece == "wN"){
-                        $(squareName).append("<img src=" + wN + ">");
+                        $(squareName).append("<img src=" + wN + " width=100% height=auto>");
                     }
                     else if(piece == "wp"){
-                        $(squareName).append("<img src=" + wp + ">");
+                        $(squareName).append("<img src=" + wp + " width=100% height=auto>");
                     }
                     else if(piece == "wQ"){
-                        $(squareName).append("<img src=" + wQ + ">");
+                        $(squareName).append("<img src=" + wQ + " width=100% height=auto>");
                     }
                     else if(piece == "wR"){
-                        $(squareName).append("<img src=" + wR + ">");
+                        $(squareName).append("<img src=" + wR + " width=100% height=auto>");
                     }
                     else{
-                        $(squareName).append("<img src=" + empty + ">");
+                        $(squareName).append("<img src=" + empty + " width=100% height=auto>");
                     }
                 }
             }
@@ -87,18 +123,24 @@
 
     </script>
 </head>
-<body></body>
-
-
-</html>
+<body>
+<div id="contentLeft">
 {% if game %}
-    <h1>Hello {{ game }}</h1>
+    <h2>Hello {{ game }}</h2>
 
 {% else %}
-    <h1>Welcome to Chess Tutor.</h1>
+    <h2>Welcome to Chess Tutor</h2>
+    <h3>How to use:</h3>
+    <h4>There is one comupter-generated optimal move</h4>
+    <h4>Click the white piece you want to move, then click the square you want it to move to</h4>
 
+    <form action = "http://localhost:5000/game" method = "POST">
+    <p><input type = "submit" value = "Next Puzzle" /></p>
+</div>
+
+<div id="contentRight">
     <div id="board">
-        <table style="width:auto; height:auto;">
+        <table style="width:100%; height:auto;">
             <tr class="row1">
               <th class="col1" style="background-color:#eaecd0;"></th>
               <th class="col2" style="background-color:#779555;"></th>
@@ -182,3 +224,6 @@
         </table>
     </div>
 {% endif %}
+</div>
+</body>
+</html>
