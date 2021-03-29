@@ -58,17 +58,15 @@ def generateBoard():
 
     return (boardString, selectSelect, selectGo)
 
-@app.route("/", methods=['GET','POST'])
-def index():
-    return render_template("index.html")
 
-@app.route('/game',methods = ['POST', 'GET'])
+
+@app.route('/',methods = ['POST', 'GET'])
 def game():
     tuple = generateBoard()
     board = tuple[0]
     select = tuple[1]
     go = tuple[2]
-    return render_template("game.html", board=board, select=select, go=go)
+    return render_template("index.html", board=board, select=select, go=go)
 
 if __name__ == "__main__":
     app.run(debug=True)

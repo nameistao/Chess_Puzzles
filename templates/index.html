@@ -2,12 +2,251 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <style>
+        .move{
+            background-color: coral !important;
+        }
+    </style>
     <title>Chess Tutor</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/template.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        alert("{{select}}");
+        alert("{{go}}");
+        //get the board/problem layout
+        var board = "{{board}}".split("|");
+        var row1 = board[0].split(" ");
+        var row2 = board[1].split(" ");
+        var row3 = board[2].split(" ");
+        var row4 = board[3].split(" ");
+        var row5 = board[4].split(" ");
+        var row6 = board[5].split(" ");
+        var row7 = board[6].split(" ");
+        var row8 = board[7].split(" ");
+        var board = [row1, row2, row3, row4, row5, row6, row7, row8];
+
+        //get the image urls
+        var bB = "{{url_for('static', filename='images/bB.png')}}";
+        var bK = "{{url_for('static', filename='images/bK.png')}}";
+        var bN = "{{url_for('static', filename='images/bN.png')}}";
+        var bp = "{{url_for('static', filename='images/bp.png')}}";
+        var bQ = "{{url_for('static', filename='images/bQ.png')}}";
+        var bR = "{{url_for('static', filename='images/bR.png')}}";
+        var wB = "{{url_for('static', filename='images/wB.png')}}";
+        var wK = "{{url_for('static', filename='images/wK.png')}}";
+        var wN = "{{url_for('static', filename='images/wN.png')}}";
+        var wp = "{{url_for('static', filename='images/wp.png')}}";
+        var wQ = "{{url_for('static', filename='images/wQ.png')}}";
+        var wR = "{{url_for('static', filename='images/wR.png')}}";
+        var empty = "{{url_for('static', filename='images/--.png')}}";
+
+        var selectedBool = false;
+        var moveBool = false;
+        var selectedLoc = "";
+        var moveLoc = "";
+
+        //put all the images in their positions indicated by board (8x8 2d array)
+        $( document ).ready(function() {
+
+            //for selecting and deselecting the white square that we want to move
+            $("th").click(function(){
+                //for deselecting the selectedLoc
+                if($(this).hasClass('selected') && moveBool == false){
+                    $(this).removeClass('selected');
+                    selectedBool = false;
+                }
+                //for selecting the selectedLoc
+                else if(!$(this).hasClass('empty') && $(this).hasClass('white') && selectedBool == false){
+                    $(this).addClass('selected');
+                    selectedBool = true;
+                    selectedLoc = $(this).attr('id');
+                    //alert(selectedLoc);
+                }
+
+                //for deselecting the moveLoc
+                if(selectedBool == true && moveBool == true && $(this).hasClass('move')){
+                    $(this).removeClass('move');
+                    moveBool = false;
+                }
+                //for selecting the moveLoc
+                else{
+                    if(selectedBool == true && !$(this).hasClass('white') && moveBool == false){
+                        $(this).addClass('move');
+                        moveBool = true;
+                        moveLoc = $(this).attr('id');
+                        //alert(moveLoc);
+
+                        //at this point we have both points and we can check if it's correct
+                        if(selectedLoc === "{{select}}" && moveLoc === "{{go}}"){
+                            alert("correct!");
+                        }
+                        else{
+                            alert("incorrect!");
+                        }
+
+                    }
+                }
+            });
+
+            for(i=0;i<8;i++){
+                for(j=0;j<8;j++){
+                    var rowName = ".row" + (i+1).toString();
+                    var colName = ".col" + (j+1).toString();
+                    var squareName = rowName + " " + colName;
+                    var piece = board[i][j];
+                    if(piece == "bB"){
+                        $(squareName).append("<img src=" + bB + " width=100% height=auto>");
+                    }
+                    else if(piece == "bK"){
+                        $(squareName).append("<img src=" + bK + " width=100% height=auto>");
+                    }
+                    else if(piece == "bN"){
+                        $(squareName).append("<img src=" + bN + " width=100% height=auto>");
+                    }
+                    else if(piece == "bp"){
+                        $(squareName).append("<img src=" + bp + " width=100% height=auto>");
+                    }
+                    else if(piece == "bQ"){
+                        $(squareName).append("<img src=" + bQ + " width=100% height=auto>");
+                    }
+                    else if(piece == "bR"){
+                        $(squareName).append("<img src=" + bR + " width=100% height=auto>");
+                    }
+                    else if(piece == "wB"){
+                        $(squareName).append("<img src=" + wB + " width=100% height=auto>");
+                        $(squareName).addClass('white');
+                    }
+                    else if(piece == "wK"){
+                        $(squareName).append("<img src=" + wK + " width=100% height=auto>");
+                        $(squareName).addClass('white');
+                    }
+                    else if(piece == "wN"){
+                        $(squareName).append("<img src=" + wN + " width=100% height=auto>");
+                        $(squareName).addClass('white');
+                    }
+                    else if(piece == "wp"){
+                        $(squareName).append("<img src=" + wp + " width=100% height=auto>");
+                        $(squareName).addClass('white');
+                    }
+                    else if(piece == "wQ"){
+                        $(squareName).append("<img src=" + wQ + " width=100% height=auto>");
+                        $(squareName).addClass('white');
+                    }
+                    else if(piece == "wR"){
+                        $(squareName).append("<img src=" + wR + " width=100% height=auto>");
+                        $(squareName).addClass('white');
+                    }
+                    else{
+                        $(squareName).append("<img src=" + empty + " width=100% height=auto>");
+                        $(squareName).addClass('empty');
+                    }
+                }
+            }
+        });
+
+    </script>
 </head>
 <body>
-    <h1>Welcome to Chess Tutor!</h1>
-    <form action = "http://localhost:5000/game" method = "POST">
-    <p><input type = "submit" value = "Get Started!" /></p>
-</form>
+<div id="contentLeft">
+{% if game %}
+    <h2>Hello {{ game }}</h2>
+
+{% else %}
+    <h2>Welcome to Chess Tutor</h2>
+    <h3>How to use:</h3>
+    <h4>There is one comupter-generated optimal move</h4>
+    <h4>Click the white piece you want to move, then click the square you want it to move to</h4>
+
+    <form action = "http://localhost:5000/" method = "POST">
+    <p><input type = "submit" value = "Next Puzzle" /></p>
+</div>
+
+<div id="contentRight">
+    <div id="board">
+        <table style="width:100%; height:auto;">
+            <tr class="row1">
+              <th class="col1" id="1" style="background-color:#eaecd0;"></th>
+              <th class="col2" id="2" style="background-color:#779555;"></th>
+              <th class="col3" id="3" style="background-color:#eaecd0;"></th>
+              <th class="col4" id="4" style="background-color:#779555;"></th>
+              <th class="col5" id="5" style="background-color:#eaecd0;"></th>
+              <th class="col6" id="6" style="background-color:#779555;"></th>
+              <th class="col7" id="7" style="background-color:#eaecd0;"></th>
+              <th class="col8" id="8" style="background-color:#779555;"></th>
+            </tr>
+            <tr class="row2">
+              <th class="col1" id="9" style="background-color:#779555;"></th>
+              <th class="col2" id="10" style="background-color:#eaecd0;"></th>
+              <th class="col3" id="11" style="background-color:#779555;"></th>
+              <th class="col4" id="12" style="background-color:#eaecd0;"></th>
+              <th class="col5" id="13" style="background-color:#779555;"></th>
+              <th class="col6" id="14" style="background-color:#eaecd0;"></th>
+              <th class="col7" id="15" style="background-color:#779555;"></th>
+              <th class="col8" id="16" style="background-color:#eaecd0;"></th>
+            </tr>
+            <tr class="row3">
+              <th class="col1" id="17" style="background-color:#eaecd0;"></th>
+              <th class="col2" id="18" style="background-color:#779555;"></th>
+              <th class="col3" id="19" style="background-color:#eaecd0;"></th>
+              <th class="col4" id="20" style="background-color:#779555;"></th>
+              <th class="col5" id="21" style="background-color:#eaecd0;"></th>
+              <th class="col6" id="22" style="background-color:#779555;"></th>
+              <th class="col7" id="23" style="background-color:#eaecd0;"></th>
+              <th class="col8" id="24" style="background-color:#779555;"></th>
+             </tr>
+            <tr class="row4">
+              <th class="col1" id="25" style="background-color:#779555;"></th>
+              <th class="col2" id="26" style="background-color:#eaecd0;"></th>
+              <th class="col3" id="27" style="background-color:#779555;"></th>
+              <th class="col4" id="28" style="background-color:#eaecd0;"></th>
+              <th class="col5" id="29" style="background-color:#779555;"></th>
+              <th class="col6" id="30" style="background-color:#eaecd0;"></th>
+              <th class="col7" id="31" style="background-color:#779555;"></th>
+              <th class="col8" id="32" style="background-color:#eaecd0;"></th>
+             </tr>
+            <tr class="row5">
+              <th class="col1" id="33" style="background-color:#eaecd0;"></th>
+              <th class="col2" id="34" style="background-color:#779555;"></th>
+              <th class="col3" id="35" style="background-color:#eaecd0;"></th>
+              <th class="col4" id="36" style="background-color:#779555;"></th>
+              <th class="col5" id="37" style="background-color:#eaecd0;"></th>
+              <th class="col6" id="38" style="background-color:#779555;"></th>
+              <th class="col7" id="39" style="background-color:#eaecd0;"></th>
+              <th class="col8" id="40" style="background-color:#779555;"></th>
+             </tr>
+            <tr class="row6">
+              <th class="col1" id="41" style="background-color:#779555;"></th>
+              <th class="col2" id="42" style="background-color:#eaecd0;"></th>
+              <th class="col3" id="43" style="background-color:#779555;"></th>
+              <th class="col4" id="44" style="background-color:#eaecd0;"></th>
+              <th class="col5" id="45" style="background-color:#779555;"></th>
+              <th class="col6" id="46" style="background-color:#eaecd0;"></th>
+              <th class="col7" id="47" style="background-color:#779555;"></th>
+              <th class="col8" id="48" style="background-color:#eaecd0;"></th>
+             </tr>
+            <tr class="row7">
+              <th class="col1" id="49" style="background-color:#eaecd0;"></th>
+              <th class="col2" id="50" style="background-color:#779555;"></th>
+              <th class="col3" id="51" style="background-color:#eaecd0;"></th>
+              <th class="col4" id="52" style="background-color:#779555;"></th>
+              <th class="col5" id="53" style="background-color:#eaecd0;"></th>
+              <th class="col6" id="54" style="background-color:#779555;"></th>
+              <th class="col7" id="55" style="background-color:#eaecd0;"></th>
+              <th class="col8" id="56" style="background-color:#779555;"></th>
+             </tr>
+            <tr class="row8">
+              <th class="col1" id="57" style="background-color:#779555;"></th>
+              <th class="col2" id="58" style="background-color:#eaecd0;"></th>
+              <th class="col3" id="59" style="background-color:#779555;"></th>
+              <th class="col4" id="60" style="background-color:#eaecd0;"></th>
+              <th class="col5" id="61" style="background-color:#779555;"></th>
+              <th class="col6" id="62" style="background-color:#eaecd0;"></th>
+              <th class="col7" id="63" style="background-color:#779555;"></th>
+              <th class="col8" id="64" style="background-color:#eaecd0;"></th>
+             </tr>
+        </table>
+    </div>
+{% endif %}
+</div>
 </body>
 </html>
