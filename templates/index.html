@@ -11,8 +11,6 @@
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/template.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        alert("{{select}}");
-        alert("{{go}}");
         //get the board/problem layout
         var board = "{{board}}".split("|");
         var row1 = board[0].split(" ");
@@ -48,6 +46,26 @@
         //put all the images in their positions indicated by board (8x8 2d array)
         $( document ).ready(function() {
 
+            //inserting the answer in the answer div
+            var pieceRow = Math.ceil({{select}}/8);
+            var pieceCol = {{select}}%8;
+            if(pieceCol === 0){
+                pieceCol = 8;
+            }
+            $('#answer').append("Select piece at (" + pieceRow + "," + pieceCol + ")");
+
+            var moveRow = Math.ceil({{go}}/8);
+            var moveCol = {{go}}%8;
+            if(moveCol === 0){
+                moveCol = 8;
+            }
+            $('#answer').append(" and move it to (" + moveRow + "," + moveCol + ")");
+
+            //for showing the answer
+            $("#answerButton").click(function (){
+                $("#answer").css("visibility", "visible");
+            });
+
             //for selecting and deselecting the white square that we want to move
             $("th").click(function(){
                 //for deselecting the selectedLoc
@@ -78,10 +96,12 @@
 
                         //at this point we have both points and we can check if it's correct
                         if(selectedLoc === "{{select}}" && moveLoc === "{{go}}"){
-                            alert("correct!");
+                            $('#result').empty();
+                            $('#result').append("Correct!");
                         }
                         else{
-                            alert("incorrect!");
+                            $('#result').empty();
+                            $('#result').append("Incorrect. Try Again.");
                         }
 
                     }
@@ -153,7 +173,14 @@
     <h4>There is one comupter-generated optimal move</h4>
     <h4>Click the white piece you want to move, then click the square you want it to move to</h4>
 
-    <form action = "http://localhost:5000/" method = "POST">
+    <h1 id="result"></h1>
+
+    <button type="button" id="answerButton">Show Answer</button>
+    <div id="answer" style="visibility: hidden">
+        <div>The top-left corner is (1,1) and the answers are in the format (row, column)</div>
+        <div>Answer:</div>
+    </div>
+    <form action = "/" method = "POST">
     <p><input type = "submit" value = "Next Puzzle" /></p>
 </div>
 
