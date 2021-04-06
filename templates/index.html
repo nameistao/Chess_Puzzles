@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <style>
+        body{
+            background-color:#312e2b;
+            color:#ffffff;
+            font-family:Poppins;
+        }
+        #head{
+            text-align:center;
+            width:100%;
+        }
         .move{
             background-color: coral !important;
         }
     </style>
     <title>Chess Tutor</title>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/template.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
     <script>
         //get the board/problem layout
         var board = "{{board}}".split("|");
@@ -98,6 +109,7 @@
                         if(selectedLoc === "{{select}}" && moveLoc === "{{go}}"){
                             $('#result').empty();
                             $('#result').append("Correct!");
+                            confetti();
                         }
                         else{
                             $('#result').empty();
@@ -167,21 +179,28 @@
     </script>
 </head>
 <body>
-<div id="contentLeft">
+<div id="head">
     <h2>Welcome to Chess Tutor</h2>
-    <h3>How to use:</h3>
-    <h4>There is one comupter-generated optimal move</h4>
-    <h4>Click the white piece you want to move, then click the square you want it to move to</h4>
+</div>
 
-    <h1 id="result"></h1>
-
-    <button type="button" id="answerButton">Show Answer</button>
-    <div id="answer" style="visibility: hidden">
-        <div>The top-left corner is (1,1) and the answers are in the format (row, column)</div>
-        <div>Answer:</div>
+<div id="contentLeft">
+    <div id="instructions">
+        <h3>How to use:</h3>
+        <h4>There is one comupter-generated optimal move</h4>
+        <h4>Click the white piece you want to move, then click the square you want it to move to</h4>
     </div>
-    <form action = "/" method = "POST">
-    <p><input type = "submit" value = "Next Puzzle" /></p>
+    <div id="output">
+        <h1 id="result"></h1>
+
+        <button type="button" id="answerButton">Show Answer</button>
+        <div id="answer" style="visibility: hidden">
+        <div>Answers are in the format (row, column)</div>
+        </div>
+        <form action = "/" method = "POST">
+        <p><input type = "submit" value = "Next Puzzle" /></p>
+
+    </div>
+
 </div>
 
 <div id="contentRight">

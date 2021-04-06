@@ -19,9 +19,9 @@ tr{
 }
 #contentLeft{
     float:left;
-    height:100%;
+    height:80%;
 }
 #contentRight{
-    float:right;
-    height:100%;
+    float:left;
+    height:80%;
 }
