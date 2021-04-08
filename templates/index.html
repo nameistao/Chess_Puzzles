@@ -2,60 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <style>
-        body{
-            background-color:#312e2b;
-            color:#ffffff;
-            font-family:Poppins;
-        }
-        #head{
-            text-align:center;
-            width:100%;
-        }
-        .move{
-            background-color: coral !important;
-        }
-    </style>
     <title>Chess Tutor</title>
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/template.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='template.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
     <script>
-        //get the board/problem layout
-        var board = "{{board}}".split("|");
-        var row1 = board[0].split(" ");
-        var row2 = board[1].split(" ");
-        var row3 = board[2].split(" ");
-        var row4 = board[3].split(" ");
-        var row5 = board[4].split(" ");
-        var row6 = board[5].split(" ");
-        var row7 = board[6].split(" ");
-        var row8 = board[7].split(" ");
-        var board = [row1, row2, row3, row4, row5, row6, row7, row8];
-
-        //get the image urls
-        var bB = "{{url_for('static', filename='images/bB.png')}}";
-        var bK = "{{url_for('static', filename='images/bK.png')}}";
-        var bN = "{{url_for('static', filename='images/bN.png')}}";
-        var bp = "{{url_for('static', filename='images/bp.png')}}";
-        var bQ = "{{url_for('static', filename='images/bQ.png')}}";
-        var bR = "{{url_for('static', filename='images/bR.png')}}";
-        var wB = "{{url_for('static', filename='images/wB.png')}}";
-        var wK = "{{url_for('static', filename='images/wK.png')}}";
-        var wN = "{{url_for('static', filename='images/wN.png')}}";
-        var wp = "{{url_for('static', filename='images/wp.png')}}";
-        var wQ = "{{url_for('static', filename='images/wQ.png')}}";
-        var wR = "{{url_for('static', filename='images/wR.png')}}";
-        var empty = "{{url_for('static', filename='images/--.png')}}";
-
-        var selectedBool = false;
-        var moveBool = false;
-        var selectedLoc = "";
-        var moveLoc = "";
-
         //put all the images in their positions indicated by board (8x8 2d array)
         $( document ).ready(function() {
+
+            //get the board/problem layout
+            var board = "{{board}}".split("|");
+            var row1 = board[0].split(" ");
+            var row2 = board[1].split(" ");
+            var row3 = board[2].split(" ");
+            var row4 = board[3].split(" ");
+            var row5 = board[4].split(" ");
+            var row6 = board[5].split(" ");
+            var row7 = board[6].split(" ");
+            var row8 = board[7].split(" ");
+            var board = [row1, row2, row3, row4, row5, row6, row7, row8];
+
+            //get the image urls
+            var bB = "{{url_for('static', filename='images/bB.png')}}";
+            var bK = "{{url_for('static', filename='images/bK.png')}}";
+            var bN = "{{url_for('static', filename='images/bN.png')}}";
+            var bp = "{{url_for('static', filename='images/bp.png')}}";
+            var bQ = "{{url_for('static', filename='images/bQ.png')}}";
+            var bR = "{{url_for('static', filename='images/bR.png')}}";
+            var wB = "{{url_for('static', filename='images/wB.png')}}";
+            var wK = "{{url_for('static', filename='images/wK.png')}}";
+            var wN = "{{url_for('static', filename='images/wN.png')}}";
+            var wp = "{{url_for('static', filename='images/wp.png')}}";
+            var wQ = "{{url_for('static', filename='images/wQ.png')}}";
+            var wR = "{{url_for('static', filename='images/wR.png')}}";
+            var empty = "{{url_for('static', filename='images/--.png')}}";
+
+            var selectedBool = false;
+            var moveBool = false;
+            var selectedLoc = "";
+            var moveLoc = "";
 
             //inserting the answer in the answer div
             var pieceRow = Math.ceil({{select}}/8);
@@ -175,37 +161,16 @@
                 }
             }
         });
-
     </script>
 </head>
 <body>
 <div id="head">
-    <h2>Welcome to Chess Tutor</h2>
+    <h2>Chess Tutor</h2>
 </div>
 
-<div id="contentLeft">
-    <div id="instructions">
-        <h3>How to use:</h3>
-        <h4>There is one comupter-generated optimal move</h4>
-        <h4>Click the white piece you want to move, then click the square you want it to move to</h4>
-    </div>
-    <div id="output">
-        <h1 id="result"></h1>
-
-        <button type="button" id="answerButton">Show Answer</button>
-        <div id="answer" style="visibility: hidden">
-        <div>Answers are in the format (row, column)</div>
-        </div>
-        <form action = "/" method = "POST">
-        <p><input type = "submit" value = "Next Puzzle" /></p>
-
-    </div>
-
-</div>
-
-<div id="contentRight">
-    <div id="board">
-        <table style="width:100%; height:auto;">
+<div id="content">
+    <div id="board" style="margin:auto;">
+        <table style="margin:auto;">
             <tr class="row1">
               <th class="col1" id="1" style="background-color:#eaecd0;"></th>
               <th class="col2" id="2" style="background-color:#779555;"></th>
@@ -287,7 +252,19 @@
               <th class="col8" id="64" style="background-color:#eaecd0;"></th>
              </tr>
         </table>
-    </div>
+
+
+        <button id="answerButton" style="width:20%; margin-left:40%; margin-right:40%; background-color:#ffffff; border:none; color:#312e2b;">Answer</button>
+        <form style="width:20%; margin-left:40%; margin-right:40%;" action = "/" method = "POST">
+            <p><input style="width:100%; background-color:#ffffff; border:none; color:#312e2b;" type = "submit" value = "Next Puzzle" /></p>
+        </form>
+
+        <div id="result" style="text-align:center;"></div>
+        <div id="answer" style="visibility: hidden; text-align:center;"></div>
+
 </div>
+
+<script src="{{ url_for('static', filename='util.js') }}"></script>
+
 </body>
 </html>
