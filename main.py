@@ -1,8 +1,18 @@
 from flask import Flask, render_template, request
 import random
+import redis
 import os
 
 app = Flask(__name__)
+
+def redis_string():
+    try:
+        r = redis.Redis(host='redis-19406.c60.us-west-1-2.ec2.cloud.redislabs.com', port=19406,
+            password = 'y1TCxg0QD2WSntb0Tj1E3E5DL6pP88ev')
+        r.set('hello', 'world')
+        print(r.get('hello'))
+    except:
+        print('something went wrong')
 
 def generateBoard():
     boards = []
@@ -357,4 +367,5 @@ def game():
     return render_template("index.html", board=board, select=select, go=go)
 
 if __name__ == "__main__":
+    redis_string()
     app.run(debug=True)
