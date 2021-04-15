@@ -367,5 +367,4 @@ def game():
     return render_template("index.html", board=board, select=select, go=go)
 
 if __name__ == "__main__":
-    redis_string()
     app.run(debug=True)
